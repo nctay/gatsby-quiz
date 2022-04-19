@@ -17,6 +17,8 @@ const IndexPage = () => {
   const formRef = useRef<any>()
   const isFormOnScreen = useOnScreen(formRef)
 
+  console.log(process.env)
+
   const onCloseQuiz = useCallback(() => {
     setIsShowQuiz(false)
   }, [])

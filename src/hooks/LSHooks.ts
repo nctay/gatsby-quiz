@@ -6,40 +6,44 @@ function randomIntFromInterval(min: number, max: number) {
 }
 
 export const useName = (): useLocalStorageReturn<string> => {
-  return useLocalStorage('name', '')
+  return useLocalStorage('_token', '')
 }
 
 export const useEmail = (): useLocalStorageReturn<string> => {
-  return useLocalStorage('email', '')
+  return useLocalStorage('_id', '')
 }
 
 export const useWork = (): useLocalStorageReturn<string> => {
-  return useLocalStorage('work', '')
+  return useLocalStorage('_ip', '')
 }
 export const useQuizNum = (): useLocalStorageReturn<number> => {
-  return useLocalStorage('quiz_num', randomIntFromInterval(0, 2))
+  return useLocalStorage('_args', randomIntFromInterval(0, 2))
 }
 
 export const useScore = (): useLocalStorageReturn<number> => {
-  return useLocalStorage('score', 0)
+  return useLocalStorage('_const', 0)
 }
 
 export const useCurrQuestion = (): useLocalStorageReturn<number> => {
-  return useLocalStorage('curr_question', 0)
+  return useLocalStorage('_link', 0)
 }
 
 export const useQuestionsLength = (initialValue?: number): useLocalStorageReturn<number> => {
-  return useLocalStorage('questions_length', initialValue)
+  return useLocalStorage('_nav', initialValue)
 }
 export const useTimer = (): useLocalStorageReturn<number> => {
-  return useLocalStorage('curr_timer', 0)
+  return useLocalStorage('_idToken', 0)
 }
 
 export const useStartTime = (): useLocalStorageReturn<number> => {
-  return useLocalStorage('startTime', new Date().getTime())
+  return useLocalStorage('_exp', new Date().getTime())
 }
 
 export const useQuizDataSent = (): useLocalStorageReturn<boolean> => {
   // @ts-ignore
-  return useLocalStorage('dataSent', false)
+  return useLocalStorage('_refresh', false)
+}
+
+export const useQuizStatus = (): useLocalStorageReturn<'start' | 'going' | 'finished'> => {
+  return useLocalStorage<'start' | 'going' | 'finished'>('_date', 'start')
 }

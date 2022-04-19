@@ -9,9 +9,8 @@ import { Spacer } from '../Spacer'
 import { Typography } from '../Typography'
 import { StaticImage } from 'gatsby-plugin-image'
 import { Flex } from '../Flex'
-import useAxios from 'axios-hooks'
-import { useCallback, useEffect } from 'react'
-import { useEmail, useName, useQuizNum, useScore, useTimer, useWork } from '../../hooks/LSHooks'
+import { useCallback } from 'react'
+import { useQuizStatus } from '../../hooks/LSHooks'
 
 export const QuizBlock: React.FC<{
   shown?: boolean
@@ -19,7 +18,7 @@ export const QuizBlock: React.FC<{
   onGoToScoresForm: () => void
   onCloseQuiz: () => void
 }> = ({ shown, onGoToJoinForm, onGoToScoresForm, onCloseQuiz }) => {
-  const [quizStatus, setQuizStatus] = useLocalStorage<'start' | 'going' | 'finished'>('quiz_status', 'start')
+  const [quizStatus, setQuizStatus] = useQuizStatus()
 
   const onStart = useCallback(() => {
     setQuizStatus('going')

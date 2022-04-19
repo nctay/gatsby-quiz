@@ -1,6 +1,9 @@
 import { useEffect, useState, useCallback, useMemo } from 'react'
 
 import { usePrevious } from './usePrevious'
+import { EncryptStorage } from 'encrypt-storage'
+
+const encryptStorage = new EncryptStorage('JSON.stringify(data)')
 
 export type useLocalStorageReturn<D> = [D | undefined, (value: D) => void, () => void]
 export function useLocalStorage<D>(key: string, initialValue: D | undefined): useLocalStorageReturn<D> {
@@ -12,12 +15,12 @@ export function useLocalStorage<D>(key: string, initialValue: D | undefined): us
       try {
         // Get from local storage by key
         if (typeof window !== 'undefined') {
-          const item = localStorage.getItem(lsKey)
+          const item = encryptStorage.getItem(lsKey)
           // Parse stored json or if none return initialValue
           if (!item && initialValue !== undefined) {
-            localStorage.setItem(lsKey, JSON.stringify(initialValue))
+            encryptStorage.setItem(lsKey, JSON.stringify(initialValue))
           }
-          return item ? JSON.parse(item) : initialValue
+          return item ? item : initialValue
         }
         return initialValue
       } catch (error) {
@@ -25,7 +28,7 @@ export function useLocalStorage<D>(key: string, initialValue: D | undefined): us
         console.log('initial value', error, initialValue)
         if (initialValue !== undefined) {
           if (typeof window !== 'undefined') {
-            localStorage.setItem(lsKey, JSON.stringify(initialValue))
+            encryptStorage.setItem(lsKey, JSON.stringify(initialValue))
           }
         }
         return initialValue
@@ -46,7 +49,7 @@ export function useLocalStorage<D>(key: string, initialValue: D | undefined): us
         setStoredValue(valueToStore)
         // Save to local storage
         if (typeof window !== 'undefined') {
-          localStorage.setItem(key, JSON.stringify(valueToStore))
+          encryptStorage.setItem(key, JSON.stringify(valueToStore))
         }
       } catch (error) {
         // A more advanced implementation would handle the error case
@@ -59,7 +62,7 @@ export function useLocalStorage<D>(key: string, initialValue: D | undefined): us
   const removeValue = useCallback((): void => {
     try {
       if (typeof window !== 'undefined') {
-        localStorage.removeItem(key)
+        encryptStorage.removeItem(key)
       }
       setStoredValue(undefined)
     } catch (error) {
