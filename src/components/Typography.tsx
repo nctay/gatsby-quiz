@@ -16,7 +16,7 @@ const Text = styled.span<{
   font-size: ${({ fontSize }) => (fontSize ? fontSize / 100 : 20 / 100)}rem;
   line-height: ${({ lineHeight }) => (lineHeight ? lineHeight / 100 : 24)}rem;
   text-align: ${({ textAlign }) => textAlign ?? 'left'};
-  color: ${({ color }) => color ?? '#000000'};
+  color: ${({ color }) => color ?? '#020223'};
 `
 export const Typography: React.FC<
   HTMLAttributes<HTMLSpanElement> & {

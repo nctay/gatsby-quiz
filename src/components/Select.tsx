@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import SelectSearch, { SelectSearchProps } from 'react-select-search'
+import { Typography } from './Typography'
 
 export const Select: React.FC<SelectSearchProps & { error?: boolean; errorMessage?: string }> = ({
   error,
@@ -10,14 +11,24 @@ export const Select: React.FC<SelectSearchProps & { error?: boolean; errorMessag
   return (
     <Wrapper error={error}>
       <SelectSearch {...props} />
+      {errorMessage && (
+        <Typography
+          fontSize={12}
+          lineHeight={14}
+          color="red"
+          display="block"
+          textAlign="center"
+          style={{ width: '100%' }}
+        >
+          {errorMessage}
+        </Typography>
+      )}
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div<{ error?: boolean }>`
-  width: 307px;
-  margin: 0 auto;
-  border: none;
+  width: 100%;
   /**
    * Main wrapper
    */
@@ -29,9 +40,13 @@ const Wrapper = styled.div<{ error?: boolean }>`
   }
 
   .select-search__input {
-    border: ${({ error }) => (error ? '1px solid tomato' : '1px solid #000000')};
-    box-shadow: ${({ error }) =>
-      error ? '0 4px 4px rgba(255,100,70,0.25)' : '0 4px 4px rgba(0, 0, 0, 0.25)'};
+    border: ${({ error }) => (error ? '1px solid red' : '0.01rem solid rgba(0, 0, 0, 0.1)')};
+    :hover {
+      border: ${({ error }) => (error ? '1px solid red' : '0.01rem solid rgba(0, 0, 0, 0.2)')};
+    }
+    :focus {
+      border: ${({ error }) => (error ? '1px solid red' : '0.01rem solid rgba(0, 0, 0, 0.3)')};
+    }
   }
   .select-search *,
   .select-search *::after,
@@ -52,7 +67,7 @@ const Wrapper = styled.div<{ error?: boolean }>`
     display: inline-block;
     position: absolute;
     top: calc(50% - 9px);
-    right: 19px;
+    right: 22px;
     width: 11px;
     height: 11px;
   }
@@ -61,19 +76,16 @@ const Wrapper = styled.div<{ error?: boolean }>`
    * Input
    */
   .select-search__input {
-    background: #fbfbfb;
-    border-radius: 10px;
+    background: white;
     display: block;
     width: 100%;
-    max-width: 307px;
     margin: 0 auto;
-    padding: 15px;
-    text-align: center;
     outline: none;
-    font-size: 14px;
-    line-height: 14px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
+    height: 0.48rem;
+    font-size: 0.16rem;
+    line-height: 0.28rem;
+    border-radius: 0.1rem;
+    padding: 0.15rem 0.2rem;
   }
 
   .select-search__input::-webkit-search-decoration,
@@ -115,7 +127,7 @@ const Wrapper = styled.div<{ error?: boolean }>`
   .select-search__option,
   .select-search__not-found {
     display: block;
-    height: 30px;
+    height: 0.35rem;
     width: 100%;
     padding: 0 16px;
     background: #fff;
@@ -165,6 +177,5 @@ const Wrapper = styled.div<{ error?: boolean }>`
     left: 0;
     border-radius: 10px;
     overflow: auto;
-    max-height: 200px;
   }
 `

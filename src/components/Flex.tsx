@@ -49,6 +49,7 @@ export type TFlexProps = {
     | 'unsafe center'
   flexShrink?: number | string
   flexGrow?: number | string
+  flex?: string
 }
 export const Flex = styled.div<TFlexProps>`
   display: flex;
@@ -70,5 +71,6 @@ export const Flex = styled.div<TFlexProps>`
     ${props.flexGrow || typeof props.flexGrow === 'number'
       ? `flex-grow: ${typeof props.flexGrow === 'number' ? `${props.flexGrow}` : props.flexGrow};`
       : ''}
+    ${props.flex ? `flex: ${props.flex};` : ''}
   `}
 `

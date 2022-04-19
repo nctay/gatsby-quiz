@@ -9,8 +9,8 @@ const Wrapper = styled.button`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   background: #1545ec;
   border-radius: 90px;
-  font-size: 14px;
-  line-height: 17px;
+  font-size: 0.16rem;
+  line-height: 0.2rem;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   color: #fff;
@@ -21,7 +21,7 @@ const Wrapper = styled.button`
   text-decoration: none;
   position: relative;
   transition: background 0.2s, box-shadow 0.15s;
-  padding: 14px 55px;
+  padding: 14px 44px;
 
   ::before {
     display: none;

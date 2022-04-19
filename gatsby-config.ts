@@ -7,12 +7,30 @@ const config: GatsbyConfig = {
   },
   plugins: [
     'gatsby-plugin-styled-components',
-    'gatsby-plugin-image',
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
     {
-      resolve: 'gatsby-plugin-transition-link'
+      resolve: 'gatsby-plugin-image',
+      options: {
+        defaults: {
+          formats: [`auto`],
+          placeholder: `none`,
+          breakpoint: [],
+          quality: 100,
+          backgroundColor: `transparent`,
+          tracedSVGOptions: {},
+          blurredOptions: {},
+          jpgOptions: {},
+          pngOptions: {},
+          webpOptions: {},
+          avifOptions: {}
+        }
+      }
+    },
+    'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-plugin-sharp',
+      options: {
+        quality: 100
+      }
     },
     {
       resolve: 'gatsby-source-filesystem',

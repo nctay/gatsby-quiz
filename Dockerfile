@@ -1,4 +1,4 @@
-FROM nexus.inno.tech/inno-quiz/customer-account/frontend:base AS builder
+FROM nexus.inno.tech/inno-quiz/inno-quiz/frontend:base AS builder
 RUN rm -rf /app/src
 ADD ./ /app
 WORKDIR /app

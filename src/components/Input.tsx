@@ -1,39 +1,69 @@
 import React, { InputHTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { Typography } from './Typography'
+import { Flex } from './Flex'
+import MaskedInput, { MaskedInputProps } from 'react-text-mask'
 
 export const Input = React.forwardRef<
   HTMLInputElement,
-  InputHTMLAttributes<HTMLInputElement> & { error?: boolean; errorMessage?: string }
->(({ error, errorMessage, ...props }, ref) => {
+  InputHTMLAttributes<HTMLInputElement> & { error?: boolean; errorMessage?: string } & {
+    mask?: MaskedInputProps['mask']
+  }
+>(({ error, errorMessage, mask, ...props }, ref) => {
   return (
-    <div>
-      <StyledInput {...props} error={error} />
+    <Flex flexDirection="column" flex="1 1 0">
+      {/* @ts-ignore*/}
+      <StyledInput mask={mask ?? Array(255).fill(/.*/)} guide={false} {...props} error={error} />
       {errorMessage && (
-        <Typography fontSize={12} fontWeight={14} color="tomato" display="block" textAlign="center">
+        <Typography
+          fontSize={12}
+          lineHeight={14}
+          color="red"
+          display="block"
+          textAlign="center"
+          style={{ width: '100%' }}
+        >
           {errorMessage}
         </Typography>
       )}
-    </div>
+    </Flex>
   )
 })
 
-const StyledInput = styled.input<{ error?: boolean }>`
-  border: ${({ error }) => (error ? '1px solid tomato' : '1px solid #000000')};
-  box-shadow: ${({ error }) => (error ? '0 4px 4px rgba(255,100,70,0.25)' : '0 4px 4px rgba(0, 0, 0, 0.25)')};
-  background: #fbfbfb;
-  border-radius: 10px;
-  display: block;
+const StyledInput = styled(MaskedInput)<{ error?: boolean }>`
+  height: 0.48rem;
   width: 100%;
-  max-width: 275px;
-  margin: 0 auto;
-  padding: 15px;
-  text-align: center;
+  font-size: 0.16rem;
+  line-height: 0.28rem;
+  background: #ffffff;
+  border: 0.01rem solid rgba(0, 0, 0, 0.1);
+  border: ${({ error }) =>
+    error ? '0.01rem solid rgba(255, 0, 0, 0.9)' : '0.01rem solid rgba(0, 0, 0, 0.1)'};
+  box-sizing: border-box;
+  border-radius: 0.1rem;
+  padding: 0.15rem 0.2rem;
   outline: none;
-  font-size: 14px;
-  line-height: 14px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
+
+  ::placeholder {
+    color: #888889;
+  }
+
+  :hover {
+    border: ${({ error }) =>
+      error ? '0.01rem solid rgba(255, 0, 0, 0.9)' : '0.01rem solid rgba(0, 0, 0, 0.2)'};
+  }
+
+  :focus {
+    border: ${({ error }) =>
+      error ? '0.01rem solid rgba(255, 0, 0, 0.9)' : '0.01rem solid rgba(0, 0, 0, 0.3)'};
+  }
+
+  ::-webkit-input-placeholder:after {
+    content: '*';
+    color: red;
+    vertical-align: top;
+    font-size: 10px;
+  }
 `
 
 const ErrorMessage = styled.div``
