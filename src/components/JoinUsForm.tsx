@@ -28,7 +28,7 @@ const JoinUsForm = React.forwardRef((props, ref) => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [name] = useName()
   const { handleSubmit, control } = useForm<JoinUsForm>({
-    mode: 'onBlur',
+    mode: 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues: {
       name: name ?? '',
@@ -71,6 +71,8 @@ const JoinUsForm = React.forwardRef((props, ref) => {
         return 'Минимум 3 символа'
       case 'isValidEmail':
         return 'Некорректный email'
+      case 'isCorrectPhone':
+        return 'Некорректный номер'
       default:
         return ''
     }
@@ -128,8 +130,17 @@ const JoinUsForm = React.forwardRef((props, ref) => {
         <Row>
           <Controller
             control={control}
-            rules={{ required: true, minLength: 3 }}
+            rules={{
+              required: true,
+              validate: {
+                isCorrectPhone: (value) =>
+                  /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(
+                    value
+                  )
+              }
+            }}
             render={({ field, fieldState }) => {
+              console.log(field.value)
               return (
                 <Input
                   {...field}
@@ -141,7 +152,6 @@ const JoinUsForm = React.forwardRef((props, ref) => {
                     /\d/,
                     /\d/,
                     ')',
-                    ' ',
                     /\d/,
                     /\d/,
                     /\d/,

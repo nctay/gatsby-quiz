@@ -39,7 +39,7 @@ const StyledInput = styled.input`
   }
 `
 const StyledLabel = styled.label`
-  line-height: 0.28rem;
-  font-size: 0.16rem;
+  line-height: 28px;
+  font-size: 16px;
   cursor: pointer;
 `

@@ -31,17 +31,16 @@ export const Input = React.forwardRef<
 })
 
 const StyledInput = styled(MaskedInput)<{ error?: boolean }>`
-  height: 0.48rem;
+  height: 48px;
   width: 100%;
-  font-size: 0.16rem;
-  line-height: 0.28rem;
+  font-size: 16px;
+  line-height: 28px;
   background: #ffffff;
   border: 0.01rem solid rgba(0, 0, 0, 0.1);
-  border: ${({ error }) =>
-    error ? '0.01rem solid rgba(255, 0, 0, 0.9)' : '0.01rem solid rgba(0, 0, 0, 0.1)'};
+  border: ${({ error }) => (error ? '1px solid rgba(255, 0, 0, 0.9)' : '1px solid rgba(0, 0, 0, 0.1)')};
   box-sizing: border-box;
-  border-radius: 0.1rem;
-  padding: 0.15rem 0.2rem;
+  border-radius: 10px;
+  padding: 15px 20px;
   outline: none;
 
   ::placeholder {
@@ -49,13 +48,11 @@ const StyledInput = styled(MaskedInput)<{ error?: boolean }>`
   }
 
   :hover {
-    border: ${({ error }) =>
-      error ? '0.01rem solid rgba(255, 0, 0, 0.9)' : '0.01rem solid rgba(0, 0, 0, 0.2)'};
+    border: ${({ error }) => (error ? '1px solid rgba(255, 0, 0, 0.9)' : '1px solid rgba(0, 0, 0, 0.2)')};
   }
 
   :focus {
-    border: ${({ error }) =>
-      error ? '0.01rem solid rgba(255, 0, 0, 0.9)' : '0.01rem solid rgba(0, 0, 0, 0.3)'};
+    border: ${({ error }) => (error ? '1px solid rgba(255, 0, 0, 0.9)' : '1px solid rgba(0, 0, 0, 0.3)')};
   }
 
   ::-webkit-input-placeholder:after {

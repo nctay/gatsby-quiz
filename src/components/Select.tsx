@@ -82,8 +82,8 @@ const Wrapper = styled.div<{ error?: boolean }>`
     margin: 0 auto;
     outline: none;
     height: 0.48rem;
-    font-size: 0.16rem;
-    line-height: 0.28rem;
+    font-size: 16px;
+    line-height: 28px;
     border-radius: 0.1rem;
     padding: 0.15rem 0.2rem;
   }
@@ -171,10 +171,11 @@ const Wrapper = styled.div<{ error?: boolean }>`
 
   .select-search:not(.select-search--multiple) .select-search__select {
     position: absolute;
-    z-index: 2;
+    z-index: 5;
     top: 50px;
     right: 0;
     left: 0;
+    border: 0.01rem solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: auto;
   }

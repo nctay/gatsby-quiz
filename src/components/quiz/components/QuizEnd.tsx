@@ -125,9 +125,11 @@ const QuizEnd: React.FC<{ onGoToJoinForm: () => void; onGoToScoresForm: () => vo
           color="#606075"
           display="block"
           textAlign="center"
+          style={{ textDecoration: 'underline', cursor: 'pointer' }}
         >
           Посмотреть результаты
         </Typography>
+        <Spacer height={20} />
       </Flex>
       <Flex flexDirection="column" width="100%">
         <Typography fontSize={16} lineHeight={22} display="block" textAlign="center">

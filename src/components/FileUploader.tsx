@@ -49,20 +49,20 @@ export const FileUploader: React.FC<{ onChange: (file?: File) => void }> = ({ on
 
 const Wrapper = styled(Flex)`
   cursor: pointer;
-  height: 0.48rem;
+  height: 48px;
   width: 100%;
-  font-size: 0.16rem;
-  line-height: 0.28rem;
+  font-size: 16px;
+  line-height: 28px;
   background: #ffffff;
-  border: 0.01rem solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  border-radius: 0.1rem;
-  padding: 0.15rem 0.2rem;
+  border-radius: 10px;
+  padding: 15px 20px;
   outline: none;
   :hover {
-    border: 0.01rem solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
   :active {
-    border: 0.01rem solid rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.3);
   }
 `
