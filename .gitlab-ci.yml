@@ -1,0 +1,73 @@
+stages:
+  - dependencies # build base container with dependencies installed
+  - build&deploy
+
+###########################################################################################
+# TEMPLATES
+###########################################################################################
+
+.build_template:
+  tags:
+    - linux
+  script:
+    - docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} ${NEXUS_DOCKER_REGISTRY}
+    - docker pull ${NEXUS_DOCKER_REGISTRY}/${CI_PROJECT_PATH}:base
+    - docker build --build-arg --progress=plain --no-cache -t ${CONTAINER_IMAGE} -f Dockerfile .
+    - docker logout ${NEXUS_DOCKER_REGISTRY}
+    - docker rmi ${CONTAINER_IMAGE}
+
+.build_base_template:
+  tags:
+    - linux
+  only:
+    refs:
+      - develop
+    changes:
+      - package.json
+  script:
+    - export CONTAINER_IMAGE=${NEXUS_DOCKER_REGISTRY}/${CI_PROJECT_PATH}:base
+    - docker build --progress=plain -t ${CONTAINER_IMAGE} -f DockerfileBase .
+    - docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} ${NEXUS_DOCKER_REGISTRY}
+    - docker push ${CONTAINER_IMAGE}
+    - docker logout ${NEXUS_DOCKER_REGISTRY}
+    - docker rmi ${CONTAINER_IMAGE}
+  allow_failure: false
+
+
+###########################################################################################
+# DEPENDENCIES STAGE
+###########################################################################################
+
+build base:
+  stage: dependencies
+  extends: .build_base_template
+
+
+###########################################################################################
+# BUILD&DEPLOY STAGE
+###########################################################################################
+
+build:
+  stage: build&deploy
+  before_script:
+    - export DOCKER_FILE=Dockerfile
+    - export CONTAINER_IMAGE=${NEXUS_DOCKER_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA:0:8}
+  extends: .build_template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: manual
+
+deploy:
+  tags:
+    - linux
+  stage: build&deploy
+  needs: [ "build" ]
+  script:
+    - helm upgrade -i -n ca-dev --set resources.limits.memory=1Gi,resources.limits.cpu=1,resources.requests.memory=512m,resources.requests.cpu=0.5,probe.readiness.initialDelaySeconds="30",probe.liveness.initialDelaySeconds="30",service.port="80,"image.tag="${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA:0:8}",image.repository="${NEXUS_DOCKER_REGISTRY}/${CI_PROJECT_PATH}" ca-front-dev https\://gitlab.inno.tech/api/v4/projects/77/repository/archive.tar.gz\?private_token=$RETOKEN
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - if: $CI_MERGE_REQUEST_ID && $CI_COMMIT_TAG && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
+      when: always
+    - when: manual

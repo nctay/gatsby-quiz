@@ -1,0 +1,21 @@
+body {
+    box-sizing: border-box;
+}
+html {
+    font-size: 700%;
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 21vw;
+    }
+}
+
+a {
+    text-decoration: none;
+    height: inherit;
+}
+ul {
+    padding: 0;
+    margin: 0;
+}
