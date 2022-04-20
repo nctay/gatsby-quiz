@@ -9,7 +9,7 @@ import { TopScores } from '../components/TopScores'
 
 import JoinUsForm from '../components/JoinUsForm'
 import { QuizBlock } from '../components/quiz'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import useOnScreen from '../hooks/useOnScreen'
 
 const IndexPage = () => {
@@ -40,6 +40,16 @@ const IndexPage = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const appHeight = () => {
+        const doc = document.documentElement
+        doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+      }
+      window.addEventListener('resize', appHeight)
+      appHeight()
+    }
+  }, [])
   return (
     <>
       <Spacer height={20} />

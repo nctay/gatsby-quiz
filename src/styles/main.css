@@ -1,7 +1,11 @@
+:root {
+    --app-height: 100vh;
+}
+
 body {
     box-sizing: border-box;
     background: #EEEEF1;
-    min-height: -webkit-fill-available;
+    min-height: var(--app-height);
 }
 
 * {
@@ -11,7 +15,7 @@ body {
 }
 html {
     font-size: 700%;
-    min-height: -webkit-fill-available;
+    min-height: var(--app-height);
 }
 
 @media (max-width: 480px) {
