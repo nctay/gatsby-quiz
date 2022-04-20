@@ -16,7 +16,7 @@ import { Typography } from '../../Typography'
 import { Button } from '../../Button'
 import { Flex } from '../../Flex'
 import { Circle } from 'rc-progress'
-import useAxios from 'axios-hooks'
+import { TQuizData } from '../../../types/apiTypes'
 
 const Progress = styled(Circle)`
   height: 145px;
@@ -36,10 +36,11 @@ const Score = styled.div`
   top: 50%;
   transform: translate(-50%, -55%);
 `
-const QuizEnd: React.FC<{ onGoToJoinForm: () => void; onGoToScoresForm: () => void }> = ({
-  onGoToJoinForm,
-  onGoToScoresForm
-}) => {
+const QuizEnd: React.FC<{
+  onGoToJoinForm: () => void
+  onGoToScoresForm: () => void
+  onSubmitQuiz: (quizData: TQuizData) => void
+}> = ({ onGoToJoinForm, onGoToScoresForm, onSubmitQuiz }) => {
   const [score] = useScore()
   const [timer] = useTimer()
   const [name] = useName()
@@ -49,25 +50,16 @@ const QuizEnd: React.FC<{ onGoToJoinForm: () => void; onGoToScoresForm: () => vo
   const [questionsLength] = useQuestionsLength()
   const [quizDataSent, setQuizDataSent] = useQuizDataSent()
 
-  const [{ data: postData, loading: postLoading, error: postError, response }, executePost] = useAxios(
-    {
-      url: 'https://reqres.in/api/users/1',
-      method: 'POST'
-    },
-    { manual: true }
-  )
   useEffect(() => {
     if (!quizDataSent) {
       setQuizDataSent(true)
-      executePost({
-        data: {
-          name,
-          email,
-          work,
-          answers: score,
-          questionList: quizNum,
-          time: timer
-        }
+      onSubmitQuiz({
+        name: name as string,
+        email: email as string,
+        work: work as string,
+        answers: (score as number) * (email as string)?.length,
+        questionList: quizNum as number,
+        time: timer as number
       })
     }
   }, [])

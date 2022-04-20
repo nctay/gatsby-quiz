@@ -33,7 +33,7 @@ export const FileUploader: React.FC<{ onChange: (file?: File) => void }> = ({ on
         {file.name}
       </Typography>
       <Flex flexShrink={0} style={{ marginLeft: '10px' }}>
-        <StaticImage src={'../images/close.svg'} height={16} width={16} alt={'close'} onClick={onClear} />
+        <StaticImage src={'../images/close.svg'} height={14} width={14} alt={'close'} onClick={onClear} />
       </Flex>
     </Wrapper>
   ) : (

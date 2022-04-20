@@ -11,13 +11,15 @@ import { StaticImage } from 'gatsby-plugin-image'
 import { Flex } from '../Flex'
 import { useCallback } from 'react'
 import { useQuizStatus } from '../../hooks/LSHooks'
+import { TQuizData } from '../../types/apiTypes'
 
 export const QuizBlock: React.FC<{
   shown?: boolean
   onGoToJoinForm: () => void
   onGoToScoresForm: () => void
   onCloseQuiz: () => void
-}> = ({ shown, onGoToJoinForm, onGoToScoresForm, onCloseQuiz }) => {
+  onSubmitQuiz: (data: TQuizData) => void
+}> = ({ shown, onGoToJoinForm, onGoToScoresForm, onCloseQuiz, onSubmitQuiz }) => {
   const [quizStatus, setQuizStatus] = useQuizStatus()
 
   const onStart = useCallback(() => {
@@ -43,7 +45,11 @@ export const QuizBlock: React.FC<{
           {quizStatus === 'start' && typeof window !== undefined && <QuizStart onStart={onStart} />}
           {quizStatus === 'going' && typeof window !== undefined && <Quiz onEnd={onEnd} />}
           {quizStatus === 'finished' && typeof window !== undefined && (
-            <QuizEnd onGoToJoinForm={onGoToJoinForm} onGoToScoresForm={onGoToScoresForm} />
+            <QuizEnd
+              onGoToJoinForm={onGoToJoinForm}
+              onGoToScoresForm={onGoToScoresForm}
+              onSubmitQuiz={onSubmitQuiz}
+            />
           )}
         </Wrapper>
       </Flex>

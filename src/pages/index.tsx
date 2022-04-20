@@ -12,12 +12,42 @@ import { QuizBlock } from '../components/quiz'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useOnScreen from '../hooks/useOnScreen'
 import { useQuizStatus } from '../hooks/LSHooks'
+import useAxios from 'axios-hooks'
+import { TQuizData, TTopScores } from '../types/apiTypes'
 
 const IndexPage = () => {
   const [isShowQuiz, setIsShowQuiz] = useState(false)
   const [quizStatus] = useQuizStatus()
   const formRef = useRef<any>()
   const isFormOnScreen = useOnScreen(formRef)
+
+  const [{ data: scores, loading: scoresLoading }, refetchScores] = useAxios<TTopScores[]>({
+    url: '/getLeaders',
+    method: 'GET'
+  })
+  const [{}, sendUserInfo] = useAxios(
+    {
+      url: '/sendUserInfo',
+      method: 'POST'
+    },
+    { manual: true }
+  )
+  const [{}, sendQuizData] = useAxios<any, TQuizData>(
+    {
+      url: '/sendQuizData',
+      method: 'POST'
+    },
+    { manual: true }
+  )
+
+  const onSubmitQuiz = (data: TQuizData) => {
+    sendQuizData({ data }).then(() => {
+      refetchScores()
+    })
+  }
+  const onSubmitUserData = (data: FormData) => {
+    sendUserInfo({ data })
+  }
 
   const onOpenQuiz = () => {
     setIsShowQuiz(true)
@@ -27,6 +57,7 @@ const IndexPage = () => {
       doc.style.setProperty('--position', `fixed`)
     }
   }
+
   const onCloseQuiz = useCallback(() => {
     setIsShowQuiz(false)
     if (typeof window !== undefined) {
@@ -35,6 +66,7 @@ const IndexPage = () => {
       doc.style.setProperty('--position', `relative`)
     }
   }, [])
+
   const onGoToJoinForm = useCallback(() => {
     onCloseQuiz()
     const element = document.getElementById('join_form')
@@ -68,6 +100,7 @@ const IndexPage = () => {
       appHeight()
     }
   }, [])
+
   return (
     <>
       <Spacer height={20} width="100%" />
@@ -135,7 +168,7 @@ const IndexPage = () => {
           </Flex>
         </Flex>
         <Spacer height={80} />
-        <TopScores />
+        <TopScores scores={scores} isLoading={scoresLoading} />
         <Spacer height={80} />
         <Typography fontSize={28} lineHeight={30} fontWeight={700} display="block" textAlign="center">
           О группе компаний «Иннотех»
@@ -153,12 +186,13 @@ const IndexPage = () => {
           </a>
         </Typography>
         <Spacer height={80} />
-        <JoinUsForm ref={formRef} />
+        <JoinUsForm ref={formRef} onSubmitUserData={onSubmitUserData} />
         <QuizBlock
           onGoToJoinForm={onGoToJoinForm}
           onGoToScoresForm={onGoToScoresForm}
           shown={isShowQuiz}
           onCloseQuiz={onCloseQuiz}
+          onSubmitQuiz={onSubmitQuiz}
         />
         <Spacer height={40} />
         <Typography fontSize={16} lineHeight={20} display="block" textAlign="center">

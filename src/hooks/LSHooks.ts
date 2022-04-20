@@ -36,7 +36,7 @@ export const useTimer = (): useLocalStorageReturn<number> => {
 }
 
 export const useStartTime = (): useLocalStorageReturn<number> => {
-  return useLocalStorage('_exp', new Date().getTime())
+  return useLocalStorage('_exp', Math.floor(new Date().getTime() / 1000))
 }
 
 export const useQuizDataSent = (): useLocalStorageReturn<boolean> => {

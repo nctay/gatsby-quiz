@@ -2,15 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 import SelectSearch, { SelectSearchProps } from 'react-select-search'
 import { Typography } from './Typography'
+import { Flex } from './Flex'
 
-export const Select: React.FC<SelectSearchProps & { error?: boolean; errorMessage?: string }> = ({
-  error,
-  errorMessage,
-  ...props
-}) => {
+export const Select: React.FC<
+  SelectSearchProps & { error?: boolean; errorMessage?: string; required?: boolean }
+> = ({ error, errorMessage, placeholder, required, value, ...props }) => {
+  const isPlaceholderShown = !value
   return (
     <Wrapper error={error}>
-      <SelectSearch {...props} />
+      <SelectSearch value={value} placeholder=" " {...props} />
+      <Placeholder isPlaceholderShown={isPlaceholderShown}>
+        {placeholder}
+        {required && <Asterisk>{' *'}</Asterisk>}
+      </Placeholder>
       {errorMessage && (
         <Typography
           fontSize={12}
@@ -27,11 +31,35 @@ export const Select: React.FC<SelectSearchProps & { error?: boolean; errorMessag
   )
 }
 
+const Asterisk = styled.span`
+  color: #e36666;
+`
+const Placeholder = styled.div<{ isPlaceholderShown?: boolean }>`
+  display: ${({ isPlaceholderShown }) => (isPlaceholderShown ? 'block' : 'none')};
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  bottom: 0;
+  height: 48px;
+  left: 21px;
+  margin: auto;
+  color: #888889;
+  font-size: 16px;
+  line-height: 48px;
+  z-index: 1;
+`
+
 const Wrapper = styled.div<{ error?: boolean }>`
   width: 100%;
   /**
    * Main wrapper
    */
+  position: relative;
+
+  .select-search__input:not(:placeholder-shown) + ${Placeholder} {
+    display: none;
+  }
+
   .select-search {
     width: 100%;
     margin: 0 auto;

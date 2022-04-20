@@ -4,10 +4,13 @@ import { Typography } from './Typography'
 import { Spacer } from './Spacer'
 import { Flex } from './Flex'
 import { Hide } from './Hide'
-import useAxios from 'axios-hooks'
+import { TTopScores } from '../types/apiTypes'
+import { Loader } from './quiz/components/Loader'
+import { formatTime } from '../utils/formatToTime'
 
 const Row = styled(Flex)`
-  height: 0.42rem;
+  min-height: 0.42rem;
+  padding: 0.09rem 0;
   width: 100%;
   border-bottom: 0.01rem solid #d6d6dc;
 `
@@ -15,6 +18,9 @@ const Row = styled(Flex)`
 const Participant = styled(Flex)`
   flex: 1 1 0;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 0.1rem;
 `
 const Score = styled(Flex)`
   align-items: center;
@@ -29,6 +35,7 @@ const Badge = styled.div<{ borderColor: string; backgroundColor: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   width: 0.16rem;
   height: 0.16rem;
   border-radius: 50%;
@@ -42,10 +49,7 @@ const Badge = styled.div<{ borderColor: string; backgroundColor: string }>`
   background: ${({ backgroundColor }) => backgroundColor};
 `
 
-const ParticipantRow: React.FC<{ data: { name: string; points: number; time: string }; index: number }> = ({
-  data,
-  index
-}) => {
+const ParticipantRow: React.FC<{ data: TTopScores; index: number }> = ({ data, index }) => {
   const badgeBorderColor = index === 0 ? '#D8AF00' : index === 1 || index === 2 ? '#929292' : '#D6D6DC'
   const badgeBackgroundColor =
     index === 0 ? '#D8AF00' : index === 1 || index === 2 ? '#929292' : 'transparent'
@@ -55,7 +59,13 @@ const ParticipantRow: React.FC<{ data: { name: string; points: number; time: str
         <Badge borderColor={badgeBorderColor} backgroundColor={badgeBackgroundColor}>
           {index + 1}
         </Badge>
-        <Typography display="block" fontSize={13} lineHeight={18} fontWeight={700}>
+        <Typography
+          display="block"
+          fontSize={13}
+          lineHeight={18}
+          fontWeight={700}
+          style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+        >
           {data?.name}
         </Typography>
       </Participant>
@@ -66,7 +76,7 @@ const ParticipantRow: React.FC<{ data: { name: string; points: number; time: str
       </Score>
       <Time>
         <Typography display="block" fontSize={13} lineHeight={18}>
-          {data?.time}
+          {formatTime(data?.time)}
         </Typography>
       </Time>
     </Row>
@@ -85,60 +95,69 @@ const LoadMore = styled.button`
 `
 
 const mockScores = new Array(25).fill({
-  name: 'Оппапапапп Ghbdfnt',
+  name: 'Фролов Дмитрий',
   points: 10,
-  time: '00:10:00'
+  time: 100
 })
 
-export const TopScores = () => {
-  const [isHiding, setIsHiding] = useState(true)
-  const [{ data: scores, loading: scoresLoading }] = useAxios({
-    url: 'https://reqres.in/api/users/1',
-    method: 'GET'
-  })
-  return scores && !scoresLoading ? (
-    <Flex flexDirection="column" id="scores" width="100%" alignItems="center">
-      <Typography fontSize={28} lineHeight={30} fontWeight={700} display="block" textAlign="center">
-        Турнирная таблица
-      </Typography>
-      <Spacer height={20} width="100%" />
-      <Row>
-        <Participant>
-          <Typography display="block" fontSize={12} lineHeight={18} color="#606075">
-            УЧАСТНИК
-          </Typography>
-        </Participant>
-        <Score>
-          <Typography display="block" fontSize={12} lineHeight={18} color="#606075">
-            БАЛЛЫ
-          </Typography>
-        </Score>
-        <Time>
-          <Typography display="block" fontSize={12} lineHeight={18} color="#606075">
-            ВРЕМЯ
-          </Typography>
-        </Time>
-      </Row>
-      {mockScores.slice(0, 10).map((item: { name: string; points: number; time: string }, index: number) => {
-        return <ParticipantRow data={item} index={index} />
-      })}
-      {mockScores.length > 10 && (
-        <>
-          <Hide isHiding={!isHiding}>
-            <Flex flexDirection="column" alignItems="center">
-              <Spacer height={20} width="100%" />
-              <LoadMore onClick={() => setIsHiding(false)}>Загрузить ещё результаты</LoadMore>
-            </Flex>
-          </Hide>
-          <Hide isHiding={isHiding}>
-            {mockScores
-              .slice(10, 25)
-              .map((item: { name: string; points: number; time: string }, index: number) => {
-                return <ParticipantRow data={item} index={index + 10} />
-              })}
-          </Hide>
-        </>
-      )}
-    </Flex>
-  ) : null
-}
+export const TopScores = React.memo<{ scores?: TTopScores[]; isLoading?: boolean }>(
+  ({ scores, isLoading }) => {
+    const [isHiding, setIsHiding] = useState(true)
+    return (
+      <Flex flexDirection="column" id="scores" width="100%" alignItems="center">
+        <Typography fontSize={28} lineHeight={30} fontWeight={700} display="block" textAlign="center">
+          Турнирная таблица
+        </Typography>
+        {scores && scores?.length > 1 && (
+          <>
+            <Spacer height={20} width="100%" />
+            <Row>
+              <Participant>
+                <Typography display="block" fontSize={12} lineHeight={18} color="#606075">
+                  УЧАСТНИК
+                </Typography>
+              </Participant>
+              <Score>
+                <Typography display="block" fontSize={12} lineHeight={18} color="#606075">
+                  БАЛЛЫ
+                </Typography>
+              </Score>
+              <Time>
+                <Typography display="block" fontSize={12} lineHeight={18} color="#606075">
+                  ВРЕМЯ
+                </Typography>
+              </Time>
+            </Row>
+            {scores.slice(0, 10).map((item, index) => {
+              return <ParticipantRow data={item} index={index} />
+            })}
+            {scores.length > 10 && (
+              <>
+                <Hide isHiding={!isHiding}>
+                  <Flex flexDirection="column" alignItems="center">
+                    <Spacer height={20} width="100%" />
+                    <LoadMore onClick={() => setIsHiding(false)}>Загрузить ещё результаты</LoadMore>
+                  </Flex>
+                </Hide>
+                <Hide isHiding={isHiding}>
+                  {mockScores.slice(10, 25).map((item, index) => {
+                    return <ParticipantRow data={item} index={index + 10} />
+                  })}
+                </Hide>
+              </>
+            )}
+          </>
+        )}
+        {scores?.length === 0 && !isLoading && (
+          <>
+            <Spacer height={20} width="100%" />
+            <Typography fontSize={16} lineHeight={24} display="block" textAlign="center">
+              Пройди квиз и стань первым
+            </Typography>
+          </>
+        )}
+        {isLoading && !scores && <Loader />}
+      </Flex>
+    )
+  }
+)

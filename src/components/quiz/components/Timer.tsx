@@ -8,7 +8,7 @@ const Timer = () => {
   const [startTime] = useStartTime()
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimer(new Date().getTime() - (startTime ?? 0))
+      setTimer(Math.floor(new Date().getTime() / 1000) - (startTime ?? 0))
     }, 1000)
     return () => {
       clearInterval(intervalId)

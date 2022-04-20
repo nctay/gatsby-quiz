@@ -9,11 +9,20 @@ export const Input = React.forwardRef<
   InputHTMLAttributes<HTMLInputElement> & { error?: boolean; errorMessage?: string } & {
     mask?: MaskedInputProps['mask']
   }
->(({ error, errorMessage, mask, ...props }, ref) => {
+>(({ error, errorMessage, mask, placeholder, required, ...props }, ref) => {
   return (
-    <Flex flexDirection="column" flex="1 1 0">
-      {/* @ts-ignore*/}
-      <StyledInput mask={mask ?? Array(255).fill(/.*/)} guide={false} {...props} error={error} />
+    <Wrapper flexDirection="column" flex="1 1 0">
+      <StyledInput
+        placeholder=" "
+        mask={mask ?? Array(100).fill(/.*/)}
+        guide={false}
+        {...props}
+        error={error}
+      />
+      <Placeholder>
+        {placeholder}
+        {required && <Asterisk>{' *'}</Asterisk>}
+      </Placeholder>
       {errorMessage && (
         <Typography
           fontSize={12}
@@ -26,10 +35,31 @@ export const Input = React.forwardRef<
           {errorMessage}
         </Typography>
       )}
-    </Flex>
+    </Wrapper>
   )
 })
 
+const Asterisk = styled.span`
+  color: #e36666;
+`
+const Placeholder = styled.div`
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  bottom: 0;
+  height: 48px;
+  left: 21px;
+  margin: auto;
+  color: #888889;
+  font-size: 16px;
+  line-height: 48px;
+`
+const Wrapper = styled(Flex)`
+  position: relative;
+  input:not(:placeholder-shown) + ${Placeholder} {
+    display: none;
+  }
+`
 const StyledInput = styled(MaskedInput)<{ error?: boolean }>`
   height: 48px;
   width: 100%;
@@ -43,23 +73,12 @@ const StyledInput = styled(MaskedInput)<{ error?: boolean }>`
   padding: 15px 20px;
   outline: none;
 
-  ::placeholder {
-    color: #888889;
-  }
-
   :hover {
     border: ${({ error }) => (error ? '1px solid rgba(255, 0, 0, 0.9)' : '1px solid rgba(0, 0, 0, 0.2)')};
   }
 
   :focus {
     border: ${({ error }) => (error ? '1px solid rgba(255, 0, 0, 0.9)' : '1px solid rgba(0, 0, 0, 0.3)')};
-  }
-
-  ::-webkit-input-placeholder:after {
-    content: '*';
-    color: red;
-    vertical-align: top;
-    font-size: 10px;
   }
 `
 
