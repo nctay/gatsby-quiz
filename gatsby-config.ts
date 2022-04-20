@@ -29,7 +29,7 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-plugin-sharp',
       options: {
-        quality: 100
+        defaultQuality: 100
       }
     },
     {

@@ -5,6 +5,16 @@ exports.onCreateWebpackConfig = ({ stage, rules, loaders, plugins, actions }) =>
       fallback: {
         crypto: false
       }
-    }
+    },
+    ...(stage === 'build-html' && {
+      module: {
+        rules: [
+          {
+            test: /encrypt-storage/,
+            use: loaders.null()
+          }
+        ]
+      }
+    })
   })
 }

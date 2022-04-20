@@ -3,9 +3,10 @@ import { useEffect, useState, useCallback, useMemo } from 'react'
 import { usePrevious } from './usePrevious'
 import { EncryptStorage } from 'encrypt-storage'
 
-const encryptStorage = new EncryptStorage('JSON.stringify(data)')
+const encryptStorage = typeof window !== 'undefined' ? new EncryptStorage('JSON.stringify(data)') : false
 
 export type useLocalStorageReturn<D> = [D | undefined, (value: D) => void, () => void]
+
 export function useLocalStorage<D>(key: string, initialValue: D | undefined): useLocalStorageReturn<D> {
   const [previousKey] = usePrevious(key)
   // State to store our value
@@ -14,7 +15,7 @@ export function useLocalStorage<D>(key: string, initialValue: D | undefined): us
     (lsKey: string): D | undefined => {
       try {
         // Get from local storage by key
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && encryptStorage) {
           const item = encryptStorage.getItem(lsKey)
           // Parse stored json or if none return initialValue
           if (!item && initialValue !== undefined) {
@@ -25,8 +26,7 @@ export function useLocalStorage<D>(key: string, initialValue: D | undefined): us
         return initialValue
       } catch (error) {
         // If error also return initialValue
-        console.log('initial value', error, initialValue)
-        if (initialValue !== undefined) {
+        if (initialValue !== undefined && encryptStorage) {
           if (typeof window !== 'undefined') {
             encryptStorage.setItem(lsKey, JSON.stringify(initialValue))
           }
@@ -48,7 +48,7 @@ export function useLocalStorage<D>(key: string, initialValue: D | undefined): us
         // Save state
         setStoredValue(valueToStore)
         // Save to local storage
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && encryptStorage) {
           encryptStorage.setItem(key, JSON.stringify(valueToStore))
         }
       } catch (error) {
@@ -61,7 +61,7 @@ export function useLocalStorage<D>(key: string, initialValue: D | undefined): us
 
   const removeValue = useCallback((): void => {
     try {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== 'undefined' && encryptStorage) {
         encryptStorage.removeItem(key)
       }
       setStoredValue(undefined)
