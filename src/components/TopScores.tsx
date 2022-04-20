@@ -29,13 +29,13 @@ const Badge = styled.div<{ borderColor: string; backgroundColor: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 14px;
-  height: 14px;
+  width: 0.16rem;
+  height: 0.16rem;
   border-radius: 50%;
   margin-right: 0.1rem;
   font-weight: 700;
-  font-size: 8px;
-  line-height: 10px;
+  font-size: 0.1rem;
+  line-height: 0.1rem;
   text-align: center;
   letter-spacing: -0.02em;
   border: 1px solid ${({ borderColor }) => borderColor};

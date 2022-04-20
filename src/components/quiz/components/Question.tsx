@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Typography } from '../../Typography'
 import { Spacer } from '../../Spacer'
@@ -12,6 +12,12 @@ const Question: React.FC<{
   onSkip: () => void
 }> = React.memo(({ question, onAnswer, onSkip }) => {
   const { question: questionText, answers } = question ?? {}
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // @ts-ignore
+      window.focus()
+    }
+  }, [])
   return (
     <Flex flexDirection="column">
       <Spacer height={40} />

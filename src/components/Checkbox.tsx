@@ -34,12 +34,12 @@ const StyledInput = styled.input`
     outline: 0.01rem solid rgba(0, 0, 0, 0.3);
   }
   :checked {
-    appearance: auto;
-    outline: none;
+    appearance: checkbox;
+    outline: transparent;
   }
 `
 const StyledLabel = styled.label`
   line-height: 28px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
 `

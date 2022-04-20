@@ -1,11 +1,11 @@
 import React, { ButtonHTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-const QuizAnswer: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, ...props }) => {
+const QuizAnswer: React.FC<ButtonHTMLAttributes<HTMLDivElement>> = ({ children, ...props }) => {
   return <Wrapper {...props}>{children}</Wrapper>
 }
 
-const Wrapper = styled.button`
+const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,8 +22,8 @@ const Wrapper = styled.button`
   width: 100%;
   background: #ffffff;
   border: 0.01rem solid rgba(0, 0, 0, 0.1);
-  :hover,
-  :active {
+  :active,
+  :focus {
     background: royalBlue;
     color: #fff;
   }

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Typography } from '../components/Typography'
 import { Button } from '../components/Button'
 import { Spacer } from '../components/Spacer'
@@ -11,9 +11,11 @@ import JoinUsForm from '../components/JoinUsForm'
 import { QuizBlock } from '../components/quiz'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useOnScreen from '../hooks/useOnScreen'
+import { useQuizStatus } from '../hooks/LSHooks'
 
 const IndexPage = () => {
   const [isShowQuiz, setIsShowQuiz] = useState(false)
+  const [quizStatus] = useQuizStatus()
   const formRef = useRef<any>()
   const isFormOnScreen = useOnScreen(formRef)
 
@@ -62,6 +64,7 @@ const IndexPage = () => {
         doc.style.setProperty('--app-width', `${window.innerWidth}px`)
       }
       window.addEventListener('resize', appHeight)
+      document.addEventListener('touchstart', function () {}, false)
       appHeight()
     }
   }, [])
@@ -85,7 +88,7 @@ const IndexPage = () => {
           связи и получай призы от нас.
         </Typography>
         <Spacer height={30} />
-        <QuizButton isShown={!isFormOnScreen} onClick={onOpenQuiz}>
+        <QuizButton isShown={!isFormOnScreen} isStatic={quizStatus === 'finished'} onClick={onOpenQuiz}>
           Пройти INNOQUIZ
         </QuizButton>
         <Spacer height={80} />
@@ -167,13 +170,21 @@ const IndexPage = () => {
   )
 }
 
-const QuizButton = styled(Button)<{ isShown: boolean }>`
-  position: sticky;
-  z-index: 2;
-  top: calc(100% - 80px);
-  opacity: ${({ isShown }) => (isShown ? 1 : 0)};
-  transition: opacity 0.25s ease-in-out;
-  pointer-events: ${({ isShown }) => (isShown ? 'all' : 'none')};
+const QuizButton = styled(Button)<{ isShown: boolean; isStatic: boolean }>`
+  ${({ isStatic, isShown }) =>
+    isStatic
+      ? css`
+          position: static;
+          opacity: 1;
+        `
+      : css`
+          position: sticky;
+          z-index: 2;
+          top: calc(100% - 80px);
+          opacity: ${isShown ? 1 : 0};
+          transition: opacity 0.25s ease-in-out;
+          pointer-events: ${isShown ? 'all' : 'none'};
+        `}
   @media (min-width: 800px) {
     position: static;
     opacity: 1;
