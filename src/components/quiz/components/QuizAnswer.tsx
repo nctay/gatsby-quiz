@@ -23,8 +23,7 @@ const Wrapper = styled.button`
   background: #ffffff;
   border: 0.01rem solid rgba(0, 0, 0, 0.1);
   :hover,
-  :active,
-  :focus {
+  :active {
     background: royalBlue;
     color: #fff;
   }
