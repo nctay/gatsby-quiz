@@ -13,6 +13,7 @@ stages:
     - docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} ${NEXUS_DOCKER_REGISTRY}
     - docker pull ${NEXUS_DOCKER_REGISTRY}/${CI_PROJECT_PATH}:base
     - docker build --build-arg --progress=plain --no-cache -t ${CONTAINER_IMAGE} -f Dockerfile .
+    - docker push ${CONTAINER_IMAGE}
     - docker logout ${NEXUS_DOCKER_REGISTRY}
     - docker rmi ${CONTAINER_IMAGE}
 
@@ -63,7 +64,9 @@ deploy:
   stage: build&deploy
   needs: [ "build" ]
   script:
-    - helm upgrade -i -n quiz-prod --set resources.limits.memory=1Gi,resources.limits.cpu=1,resources.requests.memory=512m,resources.requests.cpu=0.5,probe.readiness.initialDelaySeconds="30",probe.liveness.initialDelaySeconds="30",service.port="80,"image.tag="${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA:0:8}",image.repository="${NEXUS_DOCKER_REGISTRY}/${CI_PROJECT_PATH}" quiz-front https\://gitlab.inno.tech/api/v4/projects/77/repository/archive.tar.gz\?private_token=$RETOKEN
+    - echo "${PROD_K8S_CONFIG}"  | tr -d '\r'  > ./kubeconfig
+    - export KUBECONFIG=./kubeconfig
+    - helm upgrade -i -n quiz-prod --set resources.limits.memory=1Gi,resources.limits.cpu=1,resources.requests.memory=512m,resources.requests.cpu=0.5,probe.readiness.initialDelaySeconds="30",probe.liveness.initialDelaySeconds="30",service.port="80,"image.tag="${CI_COMMIT_REF_SLUG}dev-${CI_COMMIT_SHA:0:8}",image.repository="${NEXUS_DOCKER_REGISTRY}/${CI_PROJECT_PATH}" quiz-front https\://gitlab.inno.tech/api/v4/projects/77/repository/archive.tar.gz\?private_token=$RETOKEN
   rules:
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
