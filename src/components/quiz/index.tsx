@@ -80,7 +80,7 @@ const Wrapper = styled.div<{ shown?: boolean }>`
   height: 100vh;
   width: 100vw;
   position: fixed;
-  top: ${({ shown }) => (shown ? 0 : '100vh')};
+  top: ${({ shown }) => (shown ? 0 : '150vh')};
   left: 0;
   background: #eeeef1;
   transition: top 0.25s ease-in-out;
