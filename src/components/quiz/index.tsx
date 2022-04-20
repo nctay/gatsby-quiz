@@ -29,14 +29,14 @@ export const QuizBlock: React.FC<{
   }, [])
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" width="100%">
       <Background shown={shown} />
-      <Flex flexDirection="column" height="100%">
+      <Flex flexDirection="column" height="100%" width="100%">
         <Wrapper shown={shown}>
           <CloseIcon width="100%" onClick={onCloseQuiz}>
             <StaticImage src={'../../images/close.svg'} alt={'x'} height={18} width={18} />
           </CloseIcon>
-          <Spacer height={20} />
+          <Spacer height={20} width="100%" />
           <Typography fontSize={38} lineHeight={38} fontWeight={700} display="block" textAlign="center">
             Innoquiz
           </Typography>

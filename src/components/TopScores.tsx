@@ -101,7 +101,7 @@ export const TopScores = () => {
       <Typography fontSize={28} lineHeight={30} fontWeight={700} display="block" textAlign="center">
         Турнирная таблица
       </Typography>
-      <Spacer height={20} />
+      <Spacer height={20} width="100%" />
       <Row>
         <Participant>
           <Typography display="block" fontSize={12} lineHeight={18} color="#606075">
@@ -126,7 +126,7 @@ export const TopScores = () => {
         <>
           <Hide isHiding={!isHiding}>
             <Flex flexDirection="column" alignItems="center">
-              <Spacer height={20} />
+              <Spacer height={20} width="100%" />
               <LoadMore onClick={() => setIsHiding(false)}>Загрузить ещё результаты</LoadMore>
             </Flex>
           </Hide>

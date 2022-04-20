@@ -73,8 +73,8 @@ const QuizEnd: React.FC<{ onGoToJoinForm: () => void; onGoToScoresForm: () => vo
   }, [])
 
   return (
-    <Flex flexDirection="column" justifyContent="space-between" alignItems="center" flex="1 1 0">
-      <Flex flexDirection="column" alignItems="center">
+    <Flex flexDirection="column" justifyContent="space-between" alignItems="center" flex="1 1 0" width="100%">
+      <Flex flexDirection="column" alignItems="center" width="100%">
         <Spacer height={20} width="100%" />
         <Typography fontSize={16} lineHeight={22} display="block" textAlign={'center'}>
           {name}, поздравляем!
@@ -129,7 +129,7 @@ const QuizEnd: React.FC<{ onGoToJoinForm: () => void; onGoToScoresForm: () => vo
         >
           Посмотреть результаты
         </Typography>
-        <Spacer height={20} />
+        <Spacer height={20} width="100%" />
       </Flex>
       <Flex flexDirection="column" width="100%">
         <Typography fontSize={16} lineHeight={22} display="block" textAlign="center">

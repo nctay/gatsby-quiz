@@ -65,11 +65,11 @@ const IndexPage = () => {
   }, [])
   return (
     <>
-      <Spacer height={20} />
+      <Spacer height={20} width="100%" />
       <Flex width="100%" justifyContent="center">
         <StaticImage src={'../images/inno.svg'} alt={'inno logo'} />
       </Flex>
-      <Spacer height={20} />
+      <Spacer height={20} width="100%" />
       <Flex justifyContent="center" height={550} width="100%">
         <StaticImage src={'../images/promo.png'} alt="promo" height={550} />
       </Flex>
@@ -100,7 +100,7 @@ const IndexPage = () => {
               width={95}
               className="airpods"
             />
-            <Spacer height={20} />
+            <Spacer height={20} width="100%" />
             <Typography fontSize={10} lineHeight={12} fontWeight={700} display="block" color="#D8AF00">
               1 МЕСТО
             </Typography>
@@ -115,7 +115,7 @@ const IndexPage = () => {
           </Flex>
           <Flex flexDirection="column" alignItems="center" flex="1 1 0">
             <StaticImage src={'../images/cup.png'} alt={'cup'} height={157} width={108} className="cup" />
-            <Spacer height={20} />
+            <Spacer height={20} width="100%" />
             <Typography fontSize={10} lineHeight={12} fontWeight={700} display="block" color="#929292">
               2 И 3 МЕСТА
             </Typography>
