@@ -21,10 +21,13 @@ const IndexPage = () => {
   const formRef = useRef<any>()
   const isFormOnScreen = useOnScreen(formRef)
 
-  const [{ data: scores, loading: scoresLoading }, refetchScores] = useAxios<TTopScores[]>({
-    url: '/getLeaders',
-    method: 'GET'
-  })
+  const [{ data: scores, loading: scoresLoading }, fetchScores] = useAxios<TTopScores[]>(
+    {
+      url: '/getLeaders',
+      method: 'GET'
+    },
+    { manual: true }
+  )
   const [{}, sendUserInfo] = useAxios(
     {
       url: '/sendUserInfo',
@@ -42,7 +45,7 @@ const IndexPage = () => {
 
   const onSubmitQuiz = (data: TQuizData) => {
     sendQuizData({ data }).then(() => {
-      refetchScores()
+      fetchScores()
     })
   }
   const onSubmitUserData = (data: FormData) => {
@@ -89,6 +92,7 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (typeof window !== undefined) {
+      fetchScores()
       const appHeight = () => {
         console.log('here!')
         const doc = document.documentElement
