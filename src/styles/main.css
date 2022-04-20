@@ -5,6 +5,7 @@
 }
 
 body {
+    position:relative;
     box-sizing: border-box;
     background: #EEEEF1;
     min-height: var(--app-height);
