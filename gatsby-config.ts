@@ -12,10 +12,10 @@ const config: GatsbyConfig = {
       options: {
         defaults: {
           formats: [`auto`],
-          placeholder: `none`,
+          placeholder: `tracedSVG`,
+          backgroundColor: `transparent`,
           breakpoint: [],
           quality: 100,
-          backgroundColor: `transparent`,
           tracedSVGOptions: {},
           blurredOptions: {},
           jpgOptions: {},
@@ -29,7 +29,19 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-plugin-sharp',
       options: {
-        defaultQuality: 100
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `tracedSVG`,
+          quality: 100,
+          breakpoints: [],
+          backgroundColor: `transparent`,
+          tracedSVGOptions: {},
+          blurredOptions: {},
+          jpgOptions: {},
+          pngOptions: {},
+          webpOptions: {},
+          avifOptions: {}
+        }
       }
     },
     {
