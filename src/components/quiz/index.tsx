@@ -36,13 +36,13 @@ export const QuizBlock: React.FC<{
           <CloseIcon width="100%" onClick={onCloseQuiz}>
             <StaticImage src={'../../images/close.svg'} alt={'x'} height={18} width={18} />
           </CloseIcon>
-          {/*<Spacer height={20} width="100%" />*/}
+          <Spacer height={20} width="100%" />
           <Typography fontSize={38} lineHeight={38} fontWeight={700} display="block" textAlign="center">
             Innoquiz
           </Typography>
-          {quizStatus === 'start' && <QuizStart onStart={onStart} />}
-          {quizStatus === 'going' && <Quiz onEnd={onEnd} />}
-          {quizStatus === 'finished' && (
+          {quizStatus === 'start' && typeof window !== undefined && <QuizStart onStart={onStart} />}
+          {quizStatus === 'going' && typeof window !== undefined && <Quiz onEnd={onEnd} />}
+          {quizStatus === 'finished' && typeof window !== undefined && (
             <QuizEnd onGoToJoinForm={onGoToJoinForm} onGoToScoresForm={onGoToScoresForm} />
           )}
         </Wrapper>
