@@ -108,7 +108,7 @@ export const TopScores = React.memo<{ scores?: TTopScores[]; isLoading?: boolean
         <Typography fontSize={28} lineHeight={30} fontWeight={700} display="block" textAlign="center">
           Турнирная таблица
         </Typography>
-        {scores && scores?.length > 1 && (
+        {scores && Array.isArray(scores) && scores?.length > 1 && (
           <>
             <Spacer height={20} width="100%" />
             <Row>
