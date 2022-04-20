@@ -7,7 +7,6 @@ import { Input } from './Input'
 import { Select } from './Select'
 import { FileUploader } from './FileUploader'
 import { Checkbox } from './Checkbox'
-import { DevTool } from '@hookform/devtools'
 import { Typography } from './Typography'
 import { Spacer } from './Spacer'
 import useAxios from 'axios-hooks'
@@ -253,7 +252,6 @@ const JoinUsForm = React.forwardRef((props, ref) => {
         />
         <Spacer height={27} />
         <Button type="submit">Присоединится к команде</Button>
-        <DevTool control={control} />
       </Hide>
     </FormWrapper>
   )

@@ -1,6 +1,7 @@
 :root {
     --app-height: 100vh;
-    --app-width: 100vw ;
+    --app-width: 100vw;
+    --overflow: auto;
 }
 
 body {
@@ -8,6 +9,7 @@ body {
     background: #EEEEF1;
     min-height: var(--app-height);
     width: var(--app-width);
+    overflow: var(--overflow) ;
 }
 
 * {

@@ -31,7 +31,7 @@ export const QuizBlock: React.FC<{
   return (
     <Flex flexDirection="column">
       <Background shown={shown} />
-      <Flex flexDirection="column" height="100%" style={{ position: 'relative' }}>
+      <Flex flexDirection="column" height="100%">
         <Wrapper shown={shown}>
           <CloseIcon width="100%" onClick={onCloseQuiz}>
             <StaticImage src={'../../images/close.svg'} alt={'x'} height={18} width={18} />

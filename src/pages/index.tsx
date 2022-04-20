@@ -17,8 +17,19 @@ const IndexPage = () => {
   const formRef = useRef<any>()
   const isFormOnScreen = useOnScreen(formRef)
 
+  const onOpenQuiz = () => {
+    setIsShowQuiz(true)
+    if (typeof window !== undefined) {
+      const doc = document.documentElement
+      doc.style.setProperty('--overflow', `hidden`)
+    }
+  }
   const onCloseQuiz = useCallback(() => {
     setIsShowQuiz(false)
+    if (typeof window !== undefined) {
+      const doc = document.documentElement
+      doc.style.setProperty('--overflow', `auto`)
+    }
   }, [])
   const onGoToJoinForm = useCallback(() => {
     onCloseQuiz()
@@ -72,12 +83,7 @@ const IndexPage = () => {
           связи и получай призы от нас.
         </Typography>
         <Spacer height={30} />
-        <QuizButton
-          isShown={!isFormOnScreen}
-          onClick={() => {
-            setIsShowQuiz(true)
-          }}
-        >
+        <QuizButton isShown={!isFormOnScreen} onClick={onOpenQuiz}>
           Пройти INNOQUIZ
         </QuizButton>
         <Spacer height={80} />
@@ -173,7 +179,7 @@ const QuizButton = styled(Button)<{ isShown: boolean }>`
 `
 const Layout = styled.div`
   min-height: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 24px;
   @media (min-width: 800px) {

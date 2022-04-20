@@ -75,7 +75,7 @@ const QuizEnd: React.FC<{ onGoToJoinForm: () => void; onGoToScoresForm: () => vo
   return (
     <Flex flexDirection="column" justifyContent="space-between" alignItems="center" flex="1 1 0">
       <Flex flexDirection="column" alignItems="center">
-        <Spacer height={20} />
+        <Spacer height={20} width="100%" />
         <Typography fontSize={16} lineHeight={22} display="block" textAlign={'center'}>
           {name}, поздравляем!
         </Typography>
