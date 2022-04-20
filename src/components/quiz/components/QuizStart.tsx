@@ -57,7 +57,7 @@ const QuizStart: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   }
 
   return (
-    <>
+    <Flex flexDirection="column">
       <Spacer height={20} width="100%" />
       <Typography fontSize={16} lineHeight={22} display="block" textAlign="center">
         Тебе нужно будет ответить верно на 30 вопросов за минимальное время.
@@ -149,7 +149,7 @@ const QuizStart: React.FC<{ onStart: () => void }> = ({ onStart }) => {
           Нажимая кнопку, я соглашаюсь на обработку персональных данных и получение информационных сообщений
         </Typography>
       </Form>
-    </>
+    </Flex>
   )
 }
 

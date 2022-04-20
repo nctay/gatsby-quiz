@@ -2,15 +2,16 @@
     --app-height: 100vh;
     --app-width: 100vw;
     --overflow: auto;
+    --position: relative;
 }
 
 body {
-    position:relative;
     box-sizing: border-box;
     background: #EEEEF1;
     min-height: var(--app-height);
     width: var(--app-width);
-    overflow: var(--overflow) ;
+    overflow: var(--overflow);
+    position: var(--position);
 }
 
 * {

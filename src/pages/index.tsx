@@ -22,6 +22,7 @@ const IndexPage = () => {
     if (typeof window !== undefined) {
       const doc = document.documentElement
       doc.style.setProperty('--overflow', `hidden`)
+      doc.style.setProperty('--position', `fixed`)
     }
   }
   const onCloseQuiz = useCallback(() => {
@@ -29,6 +30,7 @@ const IndexPage = () => {
     if (typeof window !== undefined) {
       const doc = document.documentElement
       doc.style.setProperty('--overflow', `auto`)
+      doc.style.setProperty('--position', `relative`)
     }
   }, [])
   const onGoToJoinForm = useCallback(() => {
