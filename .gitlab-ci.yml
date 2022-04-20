@@ -13,6 +13,7 @@ stages:
     - docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} ${NEXUS_DOCKER_REGISTRY}
     - docker pull ${NEXUS_DOCKER_REGISTRY}/${CI_PROJECT_PATH}:base
     - docker build --build-arg --progress=plain --no-cache -t ${CONTAINER_IMAGE} -f Dockerfile .
+    - docker push ${CONTAINER_IMAGE}
     - docker logout ${NEXUS_DOCKER_REGISTRY}
     - docker rmi ${CONTAINER_IMAGE}
 
