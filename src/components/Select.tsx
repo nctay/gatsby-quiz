@@ -40,12 +40,12 @@ const Wrapper = styled.div<{ error?: boolean }>`
   }
 
   .select-search__input {
-    border: ${({ error }) => (error ? '1px solid red' : '0.01rem solid rgba(0, 0, 0, 0.1)')};
+    border: ${({ error }) => (error ? '1px solid red' : '1px solid rgba(0, 0, 0, 0.1)')};
     :hover {
-      border: ${({ error }) => (error ? '1px solid red' : '0.01rem solid rgba(0, 0, 0, 0.2)')};
+      border: ${({ error }) => (error ? '1px solid red' : '1px solid rgba(0, 0, 0, 0.2)')};
     }
     :focus {
-      border: ${({ error }) => (error ? '1px solid red' : '0.01rem solid rgba(0, 0, 0, 0.3)')};
+      border: ${({ error }) => (error ? '1px solid red' : '1px solid rgba(0, 0, 0, 0.3)')};
     }
   }
   .select-search *,
@@ -175,7 +175,7 @@ const Wrapper = styled.div<{ error?: boolean }>`
     top: 50px;
     right: 0;
     left: 0;
-    border: 0.01rem solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: auto;
   }
