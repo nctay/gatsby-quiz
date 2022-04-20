@@ -64,8 +64,8 @@ const CloseIcon = styled(Flex)`
 `
 
 const Background = styled.div<{ shown?: boolean }>`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -77,8 +77,8 @@ const Background = styled.div<{ shown?: boolean }>`
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
 `
 const Wrapper = styled.div<{ shown?: boolean }>`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   position: fixed;
   top: ${({ shown }) => (shown ? 0 : '150vh')};
   left: 0;

@@ -9,7 +9,7 @@ const Content = styled.div`
   margin: 0 auto;
   max-width: 700px;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   @media (max-width: 800px) {
     max-width: 480px;
   }

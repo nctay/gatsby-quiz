@@ -43,8 +43,10 @@ const IndexPage = () => {
   useEffect(() => {
     if (typeof window !== undefined) {
       const appHeight = () => {
+        console.log('here!')
         const doc = document.documentElement
         doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+        doc.style.setProperty('--app-width', `${window.innerWidth}px`)
       }
       window.addEventListener('resize', appHeight)
       appHeight()
@@ -160,7 +162,7 @@ const IndexPage = () => {
 const QuizButton = styled(Button)<{ isShown: boolean }>`
   position: sticky;
   z-index: 2;
-  top: calc(100vh - 80px);
+  top: calc(100% - 80px);
   opacity: ${({ isShown }) => (isShown ? 1 : 0)};
   transition: opacity 0.25s ease-in-out;
   pointer-events: ${({ isShown }) => (isShown ? 'all' : 'none')};
@@ -170,7 +172,7 @@ const QuizButton = styled(Button)<{ isShown: boolean }>`
   }
 `
 const Layout = styled.div`
-  min-height: 100vh;
+  min-height: 100%;
   max-width: 100vw;
   margin: 0 auto;
   padding: 0 24px;
