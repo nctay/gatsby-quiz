@@ -4,6 +4,7 @@ import { Typography } from './Typography'
 import { Spacer } from './Spacer'
 import { Flex } from './Flex'
 import { Hide } from './Hide'
+import useAxios from 'axios-hooks'
 
 const Row = styled(Flex)`
   height: 0.42rem;
@@ -24,12 +25,6 @@ const Time = styled(Flex)`
   width: 0.58rem;
 `
 
-const scores = new Array(25).fill({
-  name: 'Оппапапапп Ghbdfnt',
-  points: 10,
-  time: '00:10:00'
-})
-
 const Badge = styled.div<{ borderColor: string; backgroundColor: string }>`
   display: flex;
   justify-content: center;
@@ -46,6 +41,7 @@ const Badge = styled.div<{ borderColor: string; backgroundColor: string }>`
   border: 1px solid ${({ borderColor }) => borderColor};
   background: ${({ backgroundColor }) => backgroundColor};
 `
+
 const ParticipantRow: React.FC<{ data: { name: string; points: number; time: string }; index: number }> = ({
   data,
   index
@@ -88,9 +84,19 @@ const LoadMore = styled.button`
   padding: 14px 25px;
 `
 
+const mockScores = new Array(25).fill({
+  name: 'Оппапапапп Ghbdfnt',
+  points: 10,
+  time: '00:10:00'
+})
+
 export const TopScores = () => {
   const [isHiding, setIsHiding] = useState(true)
-  return (
+  const [{ data: scores, loading: scoresLoading }] = useAxios({
+    url: 'https://reqres.in/api/users/1',
+    method: 'GET'
+  })
+  return scores && !scoresLoading ? (
     <Flex flexDirection="column" id="scores" width="100%" alignItems="center">
       <Typography fontSize={28} lineHeight={30} fontWeight={700} display="block" textAlign="center">
         Турнирная таблица
@@ -113,20 +119,26 @@ export const TopScores = () => {
           </Typography>
         </Time>
       </Row>
-      {scores.slice(0, 10).map((item, index) => {
+      {mockScores.slice(0, 10).map((item: { name: string; points: number; time: string }, index: number) => {
         return <ParticipantRow data={item} index={index} />
       })}
-      <Hide isHiding={!isHiding}>
-        <Flex flexDirection="column" alignItems="center">
-          <Spacer height={20} />
-          <LoadMore onClick={() => setIsHiding(false)}>Загрузить ещё результаты</LoadMore>
-        </Flex>
-      </Hide>
-      <Hide isHiding={isHiding}>
-        {scores.slice(10, 25).map((item, index) => {
-          return <ParticipantRow data={item} index={index + 10} />
-        })}
-      </Hide>
+      {mockScores.length > 10 && (
+        <>
+          <Hide isHiding={!isHiding}>
+            <Flex flexDirection="column" alignItems="center">
+              <Spacer height={20} />
+              <LoadMore onClick={() => setIsHiding(false)}>Загрузить ещё результаты</LoadMore>
+            </Flex>
+          </Hide>
+          <Hide isHiding={isHiding}>
+            {mockScores
+              .slice(10, 25)
+              .map((item: { name: string; points: number; time: string }, index: number) => {
+                return <ParticipantRow data={item} index={index + 10} />
+              })}
+          </Hide>
+        </>
+      )}
     </Flex>
-  )
+  ) : null
 }

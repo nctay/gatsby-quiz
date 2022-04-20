@@ -1,7 +1,9 @@
 body {
     box-sizing: border-box;
     background: #EEEEF1;
+    min-height: -webkit-fill-available;
 }
+
 * {
     box-sizing: border-box;
     font-family: 'Inter', 'sans-serif';
@@ -9,6 +11,7 @@ body {
 }
 html {
     font-size: 700%;
+    min-height: -webkit-fill-available;
 }
 
 @media (max-width: 480px) {
