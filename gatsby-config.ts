@@ -58,6 +58,12 @@ const config: GatsbyConfig = {
       options: {
         google: { families: ['Inter:300,500,700'] }
       }
+    },
+    {
+      resolve: 'gatsby-plugin-no-sourcemaps'
+    },
+    {
+      resolve: 'gatsby-plugin-minify'
     }
   ]
 }

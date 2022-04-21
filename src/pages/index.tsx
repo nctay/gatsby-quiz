@@ -23,21 +23,21 @@ const IndexPage = () => {
 
   const [{ data: scores, loading: scoresLoading }, fetchScores] = useAxios<TTopScores[]>(
     {
-      url: '/getLeaders',
+      url: 'api/quiz/getLeaders',
       method: 'GET'
     },
     { manual: true }
   )
   const [{}, sendUserInfo] = useAxios(
     {
-      url: '/sendUserInfo',
+      url: 'api/quiz/sendUserInfo',
       method: 'POST'
     },
     { manual: true }
   )
   const [{}, sendQuizData] = useAxios<any, TQuizData>(
     {
-      url: '/sendQuizData',
+      url: 'api/quiz/sendQuizData',
       method: 'POST'
     },
     { manual: true }
