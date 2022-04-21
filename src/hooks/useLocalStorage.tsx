@@ -3,7 +3,8 @@ import { useEffect, useState, useCallback, useMemo } from 'react'
 import { usePrevious } from './usePrevious'
 import { EncryptStorage } from 'encrypt-storage'
 
-const encryptStorage = typeof window !== 'undefined' ? new EncryptStorage('JSON.stringify(data)') : false
+export const encryptStorage =
+  typeof window !== 'undefined' ? new EncryptStorage('JSON.stringify(data)') : false
 
 export type useLocalStorageReturn<D> = [D | undefined, (value: D) => void, () => void]
 
