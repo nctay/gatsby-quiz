@@ -249,6 +249,17 @@ const JoinUsForm = React.forwardRef<HTMLFormElement, { onSubmitUserData: (form: 
           />
           <Spacer height={27} />
           <Button type="submit">Присоединится к команде</Button>
+          <Spacer height={30} />
+          <Typography fontSize={12} lineHeight={18} color="#999999" display="block" textAlign="center">
+            Нажимая кнопку, я соглашаюсь на{' '}
+            <a
+              target="_blank"
+              href={'https://inno.tech/assets/work-with-data.pdf'}
+              style={{ color: 'inherit', textDecoration: 'underline' }}
+            >
+              обработку персональных данных и получение информационных сообщений
+            </a>
+          </Typography>
         </Hide>
       </FormWrapper>
     )
