@@ -3,7 +3,7 @@ import type { GatsbyConfig } from 'gatsby'
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `quiz`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://quiz.inno.tech`
   },
   plugins: [
     'gatsby-plugin-styled-components',

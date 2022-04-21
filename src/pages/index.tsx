@@ -6,6 +6,9 @@ import { Spacer } from '../components/Spacer'
 import { Flex } from '../components/Flex'
 import { StaticImage } from 'gatsby-plugin-image'
 import { TopScores } from '../components/TopScores'
+import { Helmet } from 'react-helmet'
+// @ts-ignore
+import favicon from '../images/favicon.ico'
 
 import JoinUsForm from '../components/JoinUsForm'
 import { QuizBlock } from '../components/quiz'
@@ -107,6 +110,11 @@ const IndexPage = () => {
 
   return (
     <>
+      <Helmet htmlAttributes={{ lang: 'ru' }}>
+        <meta charSet="utf-8" />
+        <link rel="icon" type="image/png" href={favicon} sizes="16x16" />
+        <title>Innoquiz</title>
+      </Helmet>
       <Spacer height={20} width="100%" />
       <Flex width="100%" justifyContent="center">
         <StaticImage src={'../images/inno.svg'} alt={'inno logo'} />
