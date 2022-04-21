@@ -9,6 +9,7 @@ import { TopScores } from '../components/TopScores'
 import { Helmet } from 'react-helmet'
 // @ts-ignore
 import favicon from '../images/favicon.ico'
+import { ParallaxProvider } from 'react-scroll-parallax'
 
 import JoinUsForm from '../components/JoinUsForm'
 import { QuizBlock } from '../components/quiz'
@@ -17,6 +18,7 @@ import useOnScreen from '../hooks/useOnScreen'
 import { useQuizStatus } from '../hooks/LSHooks'
 import useAxios from 'axios-hooks'
 import { TQuizData, TTopScores } from '../types/apiTypes'
+import { PromoImage } from '../components/PromoImage'
 
 const IndexPage = () => {
   const [isShowQuiz, setIsShowQuiz] = useState(false)
@@ -109,7 +111,7 @@ const IndexPage = () => {
   }, [])
 
   return (
-    <>
+    <ParallaxProvider>
       <Helmet htmlAttributes={{ lang: 'ru' }}>
         <meta charSet="utf-8" />
         <link rel="icon" type="image/png" href={favicon} sizes="16x16" />
@@ -120,9 +122,7 @@ const IndexPage = () => {
         <StaticImage src={'../images/inno.svg'} alt={'inno logo'} />
       </Flex>
       <Spacer height={20} width="100%" />
-      <Flex justifyContent="center" height={550} width="100%">
-        <StaticImage src={'../images/promo.png'} alt="promo" height={550} />
-      </Flex>
+      <PromoImage />
       <Layout>
         <Typography fontSize={38} lineHeight={38} fontWeight={700} display="block" textAlign="center">
           Пройди Innoquiz и получай призы от Иннотех
@@ -212,7 +212,7 @@ const IndexPage = () => {
         </Typography>
         <Spacer height={28} />
       </Layout>
-    </>
+    </ParallaxProvider>
   )
 }
 
